@@ -1,0 +1,25 @@
+{
+  "title":"Red Pepper",
+  "color_code":"#c61524",
+  "logo":"url",
+  "pages": {
+      "first_page": {
+          "image": "url"
+      },
+      "wiki": {
+          "description": "The chili pepper (also chile pepper chilli pepper, or simply chilli) is the fruit of plants from the genus Capsicum, members of the nightshade family, Solanaceae. They are widely used in many cuisines to add spiciness to dishes. The substances that give chili peppers their intensity when ingested or applied topically are capsaicin and related compounds known as capsaicinoids.\n\nChili pepper pods, which are berries, are used fresh or dried. Chilies are dried to preserve them for long periods of time, which may also be done by pickling.\n\nDried chilies are often ground into powders, although many Mexican dishes including variations on chiles rellenos use the entire chili. Dried whole chilies may be reconstituted before grinding to a paste. The chipotle is the smoked, dried, ripe jalapeño.",
+          "link_url": "wiki_url"
+      },
+      "images": {
+          "large": "img_url",
+          "small": "img_url",
+          "link_url": "img_link_url"
+      },
+      "recipe": {
+          "ingredients": "1dl sugar\n1 chili\n mint",
+          "image": "url",
+          "steps": "1.text here\n2.more text",
+          "link_url": "recipe_link_url"
+      }
+  }
+}

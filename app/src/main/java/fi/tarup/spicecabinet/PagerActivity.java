@@ -1,0 +1,93 @@
+package fi.tarup.spicecabinet;
+
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
+
+import com.google.gson.Gson;
+import com.viewpagerindicator.CirclePageIndicator;
+
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.InputStream;
+
+public class PagerActivity extends FragmentActivity {
+
+    private ViewPager mPager;
+
+    private SpiceDataObject spiceObject;
+
+    private final static int pagesSize = 5;
+    private PagerAdapter mPagerAdapter;
+
+    private String data;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_pager);
+
+        mPager = findViewById(R.id.pager);
+        mPagerAdapter = new PagerAdapter(getSupportFragmentManager());
+        mPager.setAdapter(mPagerAdapter);
+
+        CirclePageIndicator circlePageIndicator = findViewById(R.id.indicator);
+        circlePageIndicator.setViewPager(mPager);
+
+        data = loadJSONFromAsset();
+        spiceObject = new Gson().fromJson(data, SpiceDataObject.class);
+    }
+
+    public String loadJSONFromAsset() {
+        String json = null;
+        try {
+            InputStream is = getAssets().open("spicedata.json");
+            int size = is.available();
+            byte[] buffer = new byte[size];
+            is.read(buffer);
+            is.close();
+            json = new String(buffer, "UTF-8");
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+        return json;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (mPager.getCurrentItem() == 0) {
+            // If the user is currently looking at the first step, allow the system to handle the
+            // Back button. This calls finish() on this activity and pops the back stack.
+            super.onBackPressed();
+        } else {
+            // Otherwise, select the previous step.
+            mPager.setCurrentItem(mPager.getCurrentItem() - 1);
+        }
+    }
+
+    private class PagerAdapter extends FragmentPagerAdapter {
+        public PagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            switch(position) {
+
+                case 0: return PageFragment.newInstance("SecondFragment, Instance 1");
+                case 1: return WikiFragment.newInstance("FirstFragment, Instance 1", data);
+                default: return PageFragment.newInstance("ThirdFragment, Default");
+            }
+        }
+
+        @Override
+        public int getCount() {
+            return pagesSize;
+        }
+    }
+}
