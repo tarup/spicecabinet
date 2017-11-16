@@ -34,7 +34,7 @@ public class WikiFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         String data = getArguments().getString("data");
         SpiceDataObject spiceObject = new Gson().fromJson(data, SpiceDataObject.class);
-        descriptionData = spiceObject.pages.wiki.description;
+        descriptionData = spiceObject.getPages().getWiki().getDescription();
         description.setText(descriptionData);
     }
 

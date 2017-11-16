@@ -6,11 +6,10 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.widget.ScrollView;
 
 import com.google.gson.Gson;
 import com.viewpagerindicator.CirclePageIndicator;
-
-import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -21,7 +20,7 @@ public class PagerActivity extends FragmentActivity {
 
     private SpiceDataObject spiceObject;
 
-    private final static int pagesSize = 5;
+    private final static int pagesSize = 3;
     private PagerAdapter mPagerAdapter;
 
     private String data;
@@ -43,19 +42,19 @@ public class PagerActivity extends FragmentActivity {
     }
 
     public String loadJSONFromAsset() {
-        String json = null;
+        String jsonString;
         try {
             InputStream is = getAssets().open("spicedata.json");
             int size = is.available();
             byte[] buffer = new byte[size];
             is.read(buffer);
             is.close();
-            json = new String(buffer, "UTF-8");
+            jsonString = new String(buffer, "UTF-8");
         } catch (IOException ex) {
             ex.printStackTrace();
             return null;
         }
-        return json;
+        return jsonString;
     }
 
     @Override
@@ -81,7 +80,7 @@ public class PagerActivity extends FragmentActivity {
 
                 case 0: return PageFragment.newInstance("SecondFragment, Instance 1");
                 case 1: return WikiFragment.newInstance("FirstFragment, Instance 1", data);
-                default: return PageFragment.newInstance("ThirdFragment, Default");
+                default: return RecipeFragment.newInstance("ThirdFragment, Default", data);
             }
         }
 
