@@ -5,7 +5,6 @@ android {
     compileSdkVersion 26
     buildToolsVersion '26.0.2'
     defaultConfig {
-        applicationId "fi.tarup.spicecabinet"
         minSdkVersion 19
         targetSdkVersion 26
         versionCode 1
@@ -19,6 +18,19 @@ android {
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    flavorDimensions "flavorApp"
+
+    productFlavors {
+        redpepper {
+            applicationId "fi.tarup.spicecabinet.redpepper"
+            dimension "flavorApp"
+        }
+        ginger {
+            applicationId "fi.tarup.spicecabinet.ginger"
+            dimension "flavorApp"
         }
     }
 }

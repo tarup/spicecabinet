@@ -1,0 +1,16 @@
+{
+  "title":"Ginger",
+  "color_code":"#f4c242",
+  "pages": {
+      "wiki": {
+          "description": "Ginger is a flowering plant whose rhizome, ginger root or simply ginger, is widely used as a spice or a folk medicine.\n\nIt is a herbaceous perennial which grows annual stems about a meter tall bearing narrow green leaves and yellow flowers. Ginger is in the family Zingiberaceae, to which also belong turmeric, cardamom, and galangal. Ginger originated in the tropical rainforest in Southern Asia. Although ginger no longer grows wild, it is thought to have originated on the Indian subcontinent because the ginger plants grown in India show the largest amount of genetic variation. Ginger was exported to Europe via India in the first century AD as a result of the lucrative spice trade and was used extensively by the Romans.\n\nGinger produces a hot, fragrant kitchen spice.[6] Young ginger rhizomes are juicy and fleshy with a very mild taste. They are often pickled in vinegar or sherry as a snack or cooked as an ingredient in many dishes. They can be steeped in boiling water to make ginger herb tea, to which honey is often added; sliced orange or lemon fruit may be added. Ginger can be made into candy, or ginger wine, which has been made commercially since 1740.",
+          "link_url": "wiki_url"
+      },
+      "recipe": {
+          "title": "Ginger Carrot Soup",
+          "ingredients": "2 tablespoons olive oil\n1 brown onion\n5cm piece ginger\n2 garlic cloves\n6 (1kg) carrots\nSour cream\nChopped dill leaves",
+          "steps": "1. Heat oil in a saucepan over medium heat. Add onion, ginger and garlic. Reduce heat to medium-low. Cook, stirring occasionally, for 8 to 10 minutes or until onion is soft.\n\n2. Add carrots and 2 cups water to saucepan. Simmer, partially covered, for 35 to 40 minutes or until carrots are very tender. Remove from heat and set aside.\n\n3. Using a food processor or blender, process soup, in batches, until smooth. Return soup to saucepan and stir over low heat until warmed through.\n\n4. Ladle soup into bowls. Top with sour cream and dill. Serve.",
+          "link_url": "http://www.taste.com.au/recipes/carrot-ginger-soup/07d40284-4035-411f-804e-f67268f57ba5"
+      }
+  }
+}

@@ -4,6 +4,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.util.Linkify;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import com.google.gson.Gson;
 public class RecipeFragment extends Fragment {
 
     private ImageView recipeImg;
+    private TextView recipeTitle;
     private TextView ingredients;
     private TextView recipeSteps;
     private TextView recipeLink;
@@ -38,9 +40,10 @@ public class RecipeFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         String data = getArguments().getString("data");
         SpiceDataObject spiceObject = new Gson().fromJson(data, SpiceDataObject.class);
+        SpiceDataObject.PageRecipe recipeData = spiceObject.getPages().getRecipe();
 
-        String ingredientsData = spiceObject.getPages().getRecipe().getIngredients();
-        ingredients.setText(ingredientsData);
+        recipeTitle.setText(recipeData.getTitle());
+        ingredients.setText(recipeData.getIngredients());
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             recipeImg.setImageDrawable(getResources().getDrawable(R.drawable.recipe_img, getContext().getTheme()));
@@ -48,11 +51,10 @@ public class RecipeFragment extends Fragment {
             recipeImg.setImageDrawable(getResources().getDrawable(R.drawable.recipe_img));
         }
 
-        String recipeStepsData = spiceObject.getPages().getRecipe().getSteps();
-        recipeSteps.setText(recipeStepsData);
+        recipeSteps.setText(recipeData.getSteps());
+        recipeLink.setText(recipeData.getLink_url());
 
-        recipeLink.setText(spiceObject.getPages().getRecipe().getLink_url());
-
+        Linkify.addLinks(recipeLink, Linkify.ALL);
     }
 
     @Override
@@ -63,6 +65,7 @@ public class RecipeFragment extends Fragment {
 
 
         ingredients = rootView.findViewById(R.id.recipeIngredients);
+        recipeTitle = rootView.findViewById(R.id.recipeTitle);
         recipeImg = rootView.findViewById(R.id.recipeImage);
         recipeSteps = rootView.findViewById(R.id.recipeSteps);
         recipeLink = rootView.findViewById(R.id.recipeLink);

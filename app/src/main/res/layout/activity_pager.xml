@@ -13,8 +13,8 @@
         app:layout_constraintGuide_percent="0.20"
         android:orientation="horizontal"/>
 
-    <ImageView
-        android:id="@+id/imageView"
+    <View
+        android:id="@+id/colorView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@color/colorPrimary"
@@ -25,6 +25,7 @@
         />
 
     <TextView
+        android:id="@+id/app_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"

@@ -1,12 +1,14 @@
 package fi.tarup.spicecabinet;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.widget.ScrollView;
+import android.view.View;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.viewpagerindicator.CirclePageIndicator;
@@ -30,6 +32,9 @@ public class PagerActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pager);
 
+        View color = findViewById(R.id.colorView);
+        TextView title = findViewById(R.id.app_title);
+
         mPager = findViewById(R.id.pager);
         mPagerAdapter = new PagerAdapter(getSupportFragmentManager());
         mPager.setAdapter(mPagerAdapter);
@@ -39,6 +44,9 @@ public class PagerActivity extends FragmentActivity {
 
         data = loadJSONFromAsset();
         spiceObject = new Gson().fromJson(data, SpiceDataObject.class);
+
+        title.setText(spiceObject.getTitle());
+        color.setBackgroundColor(Color.parseColor(spiceObject.getColor_code()));
     }
 
     public String loadJSONFromAsset() {
