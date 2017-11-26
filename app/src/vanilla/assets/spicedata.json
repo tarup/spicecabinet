@@ -1,0 +1,14 @@
+{
+  "title":"Vanilla",
+  "color_code":"#bae4f4",
+  "pages": {
+      "wiki": {
+          "description": "Vanilla is a {flavoring derived from orchids of the genus Vanilla, primarily from the Mexican species, flat-leaved vanilla. The word vanilla, derived from vainilla, the diminutive of the Spanish word vaina (vaina itself meaning sheath or pod), is translated simply as \"little pod.\" \n\nVanilla is the second-most expensive spice after saffron, because growing the vanilla seed pods is labor-intensive. Despite the expense, vanilla is highly valued for its flavor.As a result, vanilla is widely used in both commercial and domestic baking, perfume manufacture, and aromatherapy.\n\nVanilla grows best in a hot, humid climate from sea level to an elevation of 1,500 m. The ideal climate has moderate rainfall, 1,500–3,000 mm, evenly distributed through 10 months of the year. Ideal humidity is around 80%, and under normal greenhouse conditions, it can be achieved by an evaporative cooler. Most successful vanilla growing and processing is done in the region within 10 to 20° of the equator."
+      },
+      "recipe": {
+          "title": "Classic baked vanilla cheesecake",
+          "ingredients": "1 x 250g pkt sweet biscuits\n140g butter, melted\n2 x 250g pkts cream cheese\n1 x 300g ctn sour cream\n155g (3/4 cup) caster sugar\n3 eggs\n3 teaspoons vanilla essence\nIcing sugar, to dust\nDouble cream, to serve\nFresh raspberries, to serve",
+          "steps": "1. Release the base from a 22cm (base measurement) springform pan and invert. Line the base with non-stick baking paper, allowing the edges to overhang. Secure the base back into the pan.\n\n2. Place the biscuits in the bowl of a food processor and process until finely crushed. Add the butter and process until well combined. Transfer to the lined pan. Use the back of a spoon or a straight-sided glass to spread and press the biscuit mixture firmly over the base and side of the pan. Cover with plastic wrap and place in the fridge for 30 minutes to chill.\n\n3. Meanwhile, preheat oven to 160°C. Place the cream cheese, sour cream and sugar in the clean bowl of a food processor and process until smooth. Add the eggs and vanilla, and process until well combined.\n\n4. Pour the cream cheese mixture into the prepared pan. Bake in oven for 1 hour or until just set in the centre. Turn oven off. Leave the cheesecake in the oven, with the door slightly ajar, until cooled completely (this will prevent the cake from cracking). Place in the fridge for 4 hours to chill.\n\n5. Remove the cheesecake from the pan. Cut into slices. Dust with icing sugar and serve with cream and raspberries."
+      }
+  }
+}

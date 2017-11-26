@@ -11,14 +11,12 @@ data class SpiceDataObject (
     )
 
     data class PageWiki (
-        val description: String,
-        val link_url: String
+        val description: String
     )
 
     data class PageRecipe (
         val title: String,
         val ingredients: String,
-        val steps: String,
-        val link_url: String
+        val steps: String
     )
 }

@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">SpiceCabinet</string>
+
+    <string name="app_basic_info_title">What is this app for?</string>
+    <string name="app_basic_info">Hello, you might wonder, who in the earth would use this kind of
+        app. This is a pure test application to document and test creating build variants and
+        release automation. If you want to, you can go and check my Github and there you can find
+        this app as an open source project: github.com/tarup/spicecabinet</string>
+    <string name="app_credit_info_title">Giving the credit</string>
+    <string name="app_credit_info">Content of this app comes from next sources\n\nWikipedia
+        \nTaste\nPixabay\namyinthekitchen.com\nannabellebreakey.com</string>
+
 </resources>

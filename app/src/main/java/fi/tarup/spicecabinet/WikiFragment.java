@@ -8,22 +8,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
-
 public class WikiFragment extends Fragment {
 
-    String descriptionData;
-    TextView description;
+    private TextView description;
 
-    public static WikiFragment newInstance(String text, String jsonData) {
+    public static WikiFragment newInstance() {
 
         WikiFragment f = new WikiFragment();
         Bundle b = new Bundle();
-        b.putString("msg", text);
-        b.putString("data", jsonData);
-
+        b.putString("msg", "WikiPage, Second");
         f.setArguments(b);
-
         return f;
     }
 
@@ -32,10 +26,8 @@ public class WikiFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        String data = getArguments().getString("data");
-        SpiceDataObject spiceObject = new Gson().fromJson(data, SpiceDataObject.class);
-        descriptionData = spiceObject.getPages().getWiki().getDescription();
-        description.setText(descriptionData);
+        SpiceDataObject data = ((PagerActivity)getActivity()).getSpiceData();
+        description.setText(data.getPages().getWiki().getDescription());
     }
 
     @Override
@@ -44,9 +36,7 @@ public class WikiFragment extends Fragment {
         ViewGroup rootView = (ViewGroup) inflater.inflate(
                 R.layout.fragment_wiki, container, false);
 
-
         description = rootView.findViewById(R.id.description);
-
 
         return rootView;
     }

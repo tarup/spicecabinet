@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Ginger</string>
+    <string name="footer_recipe">Ah delicious!</string>
+    <string name="footer_wiki">How nice to know!</string>
+</resources>

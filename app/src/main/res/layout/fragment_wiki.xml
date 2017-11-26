@@ -7,15 +7,28 @@
     android:fillViewport="true"
     >
 
-    <TextView
-        android:id="@+id/description"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:text="Text here."
-        android:padding="@dimen/spacing_large"
-        android:fontFamily="sans-serif"
-        android:textSize="14sp"
-        android:letterSpacing="0.15"
-        />
+        android:orientation="vertical"
+        >
+
+        <TextView
+            android:id="@+id/description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="Text here."
+            android:padding="@dimen/spacing_large"
+            style="@style/DefaultTextStyle"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/footer_wiki"
+            style="@style/FooterTextStyle"
+            />
+
+    </LinearLayout>
 
 </ScrollView>

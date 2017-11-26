@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginStart="@dimen/spacing_normal"
+    android:layout_marginEnd="@dimen/spacing_normal"
+    android:background="@color/white"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/exit_info_button"
+            android:layout_width="@dimen/button_width"
+            android:layout_height="@dimen/button_width"
+            android:background="@drawable/ic_clear_black_36dp"
+            android:backgroundTint="@color/colorPrimary"
+            android:layout_marginTop="@dimen/spacing_normal"
+            android:layout_gravity="end"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/app_basic_info_title"
+            android:paddingStart="@dimen/spacing_normal"
+            android:paddingEnd="@dimen/spacing_normal"
+            android:paddingBottom="@dimen/spacing_normal"
+            style="@style/InfoTitleStyle"
+            />
+
+        <TextView
+            android:id="@+id/app_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/spacing_normal"
+            android:paddingEnd="@dimen/spacing_normal"
+            android:paddingBottom="@dimen/spacing_normal"
+            android:text="@string/app_basic_info"
+            android:textColorLink="@color/default_title_indicator_footer_color"
+            style="@style/DefaultTextStyle"
+            />
+
+        <TextView
+            android:id="@+id/title_credits"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/app_credit_info_title"
+            android:padding="@dimen/spacing_normal"
+            style="@style/InfoTitleStyle"
+            />
+
+        <TextView
+            android:id="@+id/all_credit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/spacing_normal"
+            android:paddingEnd="@dimen/spacing_normal"
+            android:text="@string/app_credit_info"
+            android:textColorLink="@color/default_title_indicator_footer_color"
+            style="@style/DefaultTextStyle"
+            />
+
+    </LinearLayout>
+
+</ScrollView>

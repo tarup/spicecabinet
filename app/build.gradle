@@ -5,7 +5,7 @@ android {
     compileSdkVersion 26
     buildToolsVersion '26.0.2'
     defaultConfig {
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
@@ -32,6 +32,14 @@ android {
             applicationId "fi.tarup.spicecabinet.ginger"
             dimension "flavorApp"
         }
+        vanilla {
+            applicationId "fi.tarup.spicecabinet.vanilla"
+            dimension "flavorApp"
+        }
+    }
+    compileOptions {
+        targetCompatibility 1.8
+        sourceCompatibility 1.8
     }
 }
 

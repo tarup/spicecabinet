@@ -18,7 +18,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            android:src="@drawable/first_page_img"
+            android:src="@drawable/recipe_img"
             android:scaleType="centerCrop"
             />
 
@@ -32,10 +32,8 @@
             android:layout_marginTop="@dimen/spacing_normal"
             android:layout_marginLeft="@dimen/spacing_small"
             android:layout_marginRight="@dimen/spacing_small"
-            tools:text="Chili con carne"
-            android:fontFamily="sans-serif"
-            android:textSize="18sp"
-            android:letterSpacing="0.15"
+            tools:text="Recipe Title"
+            style="@style/DefaultTextStyle"
             />
 
         <TextView
@@ -48,10 +46,8 @@
             android:layout_marginTop="@dimen/spacing_biggish"
             android:layout_marginLeft="@dimen/spacing_small"
             android:layout_marginRight="@dimen/spacing_small"
-            tools:text="1dl Sugar"
-            android:fontFamily="sans-serif"
-            android:textSize="14sp"
-            android:letterSpacing="0.15"
+            tools:text="1dl Ingredient"
+            style="@style/DefaultTextStyle"
             />
 
         <TextView
@@ -64,28 +60,19 @@
             android:layout_marginTop="@dimen/spacing_largest"
             android:layout_marginLeft="@dimen/spacing_small"
             android:layout_marginRight="@dimen/spacing_small"
+            android:paddingBottom="@dimen/spacing_largest"
             tools:text="Boil water."
-            android:fontFamily="sans-serif"
-            android:textSize="14sp"
-            android:letterSpacing="0.15"
+            style="@style/DefaultTextStyle"
             />
 
         <TextView
-            android:id="@+id/recipeLink"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@+id/recipeSteps"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            android:layout_marginLeft="@dimen/spacing_small"
-            android:layout_marginRight="@dimen/spacing_small"
-            android:paddingTop="@dimen/spacing_largest"
-            android:paddingBottom="@dimen/spacing_small"
-            tools:text="Text"
-            android:textColorLink="@color/default_title_indicator_footer_color"
-            android:fontFamily="sans-serif"
-            android:textSize="14sp"
-            android:letterSpacing="0.15"
+            android:text="@string/footer_recipe"
+            style="@style/FooterTextStyle"
             />
 
     </android.support.constraint.ConstraintLayout>

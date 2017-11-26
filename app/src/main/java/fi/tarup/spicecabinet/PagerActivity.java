@@ -1,5 +1,6 @@
 package fi.tarup.spicecabinet;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,6 +9,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -23,9 +25,6 @@ public class PagerActivity extends FragmentActivity {
     private SpiceDataObject spiceObject;
 
     private final static int pagesSize = 3;
-    private PagerAdapter mPagerAdapter;
-
-    private String data;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,15 +33,21 @@ public class PagerActivity extends FragmentActivity {
 
         View color = findViewById(R.id.colorView);
         TextView title = findViewById(R.id.app_title);
+        Button infoButton = findViewById(R.id.info_button);
+
+        infoButton.setOnClickListener(view -> {
+            Intent intent = new Intent(view.getContext(), InfoActivity.class);
+            startActivity(intent);
+        });
 
         mPager = findViewById(R.id.pager);
-        mPagerAdapter = new PagerAdapter(getSupportFragmentManager());
+        PagerAdapter mPagerAdapter = new PagerAdapter(getSupportFragmentManager());
         mPager.setAdapter(mPagerAdapter);
 
         CirclePageIndicator circlePageIndicator = findViewById(R.id.indicator);
         circlePageIndicator.setViewPager(mPager);
 
-        data = loadJSONFromAsset();
+        String data = loadJSONFromAsset();
         spiceObject = new Gson().fromJson(data, SpiceDataObject.class);
 
         title.setText(spiceObject.getTitle());
@@ -68,27 +73,26 @@ public class PagerActivity extends FragmentActivity {
     @Override
     public void onBackPressed() {
         if (mPager.getCurrentItem() == 0) {
-            // If the user is currently looking at the first step, allow the system to handle the
-            // Back button. This calls finish() on this activity and pops the back stack.
-            super.onBackPressed();
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            intent.putExtra("LOGOUT", true);
+            startActivity(intent);
         } else {
-            // Otherwise, select the previous step.
             mPager.setCurrentItem(mPager.getCurrentItem() - 1);
         }
     }
 
     private class PagerAdapter extends FragmentPagerAdapter {
-        public PagerAdapter(FragmentManager fm) {
+        private PagerAdapter(FragmentManager fm) {
             super(fm);
         }
 
         @Override
         public Fragment getItem(int position) {
             switch(position) {
-
-                case 0: return PageFragment.newInstance("SecondFragment, Instance 1");
-                case 1: return WikiFragment.newInstance("FirstFragment, Instance 1", data);
-                default: return RecipeFragment.newInstance("ThirdFragment, Default", data);
+                case 0: return PageFragment.newInstance();
+                case 1: return WikiFragment.newInstance();
+                default: return RecipeFragment.newInstance();
             }
         }
 
@@ -96,5 +100,9 @@ public class PagerActivity extends FragmentActivity {
         public int getCount() {
             return pagesSize;
         }
+    }
+
+    public SpiceDataObject getSpiceData() {
+        return spiceObject;
     }
 }

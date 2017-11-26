@@ -17,11 +17,21 @@
         android:id="@+id/colorView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@color/colorPrimary"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="@+id/guideline"
+        />
+
+    <Button
+        android:id="@+id/info_button"
+        android:layout_width="@dimen/button_width"
+        android:layout_height="@dimen/button_width"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/ic_info_outline_black_36dp"
+        android:layout_margin="@dimen/spacing_small"
+        android:backgroundTint="@color/white"
         />
 
     <TextView
@@ -31,12 +41,9 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toBottomOf="@+id/guideline"
-        android:text="Red Pepper"
-        android:padding="24dp"
-        android:textStyle="bold"
-        android:textSize="18dp"
-        android:fontFamily="sans-serif-smallcaps"
-        android:textColor="#FFFFFF"
+        tools:text="Red Pepper"
+        android:padding="@dimen/spacing_large"
+        style="@style/AppTitleStyle"
         />
 
     <FrameLayout
@@ -59,7 +66,7 @@
             android:id="@+id/indicator"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:padding="10dp"
+            android:padding="@dimen/spacing_small"
             />
 
     </FrameLayout>

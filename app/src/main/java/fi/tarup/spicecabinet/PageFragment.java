@@ -11,20 +11,15 @@ public class PageFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        ViewGroup rootView = (ViewGroup) inflater.inflate(
-                R.layout.fragment_image, container, false);
-
-        return rootView;
+        return inflater.inflate(R.layout.fragment_image, container, false);
     }
 
-    public static PageFragment newInstance(String text) {
+    public static PageFragment newInstance() {
 
         PageFragment f = new PageFragment();
         Bundle b = new Bundle();
-        b.putString("msg", text);
-
+        b.putString("msg", "ImagePage, First");
         f.setArguments(b);
-
         return f;
     }
 }
