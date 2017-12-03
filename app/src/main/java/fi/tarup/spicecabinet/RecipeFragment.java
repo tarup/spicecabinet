@@ -10,6 +10,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import fi.tarup.spicecabinet.DTO.PageRecipe;
+import fi.tarup.spicecabinet.DTO.SpiceDataObject;
+
 public class RecipeFragment extends Fragment {
 
     private ImageView recipeImg;
@@ -33,7 +36,7 @@ public class RecipeFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         SpiceDataObject data = ((PagerActivity)getActivity()).getSpiceData();
-        SpiceDataObject.PageRecipe recipeData = data.getPages().getRecipe();
+        PageRecipe recipeData = data.getPages().getRecipe();
 
         recipeTitle.setText(recipeData.getTitle());
         ingredients.setText(recipeData.getIngredients());

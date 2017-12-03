@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">Vanilla</string>
     <string name="footer_recipe">No one can refuse desserts!</string>
-    <string name="footer_wiki">It's good to learn!</string>
+    <string name="footer_wiki">It is good to learn!</string>
 </resources>

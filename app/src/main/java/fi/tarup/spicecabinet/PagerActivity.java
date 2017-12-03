@@ -18,6 +18,8 @@ import com.viewpagerindicator.CirclePageIndicator;
 import java.io.IOException;
 import java.io.InputStream;
 
+import fi.tarup.spicecabinet.DTO.SpiceDataObject;
+
 public class PagerActivity extends FragmentActivity {
 
     private ViewPager mPager;
