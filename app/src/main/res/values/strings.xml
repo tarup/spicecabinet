@@ -7,7 +7,7 @@
         release automation. If you want to, you can go and check my Github and there you can find
         this app as an open source project: github.com/tarup/spicecabinet</string>
     <string name="app_credit_info_title">Giving the credit</string>
-    <string name="app_credit_info">Content of this app comes from next sources\n\nWikipedia
+    <string name="app_credit_info">Content of this app comes from following sources\n\nWikipedia
         \nTaste\nPixabay\namyinthekitchen.com\nannabellebreakey.com</string>
 
 </resources>

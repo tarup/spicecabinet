@@ -36,10 +36,14 @@ public class PagerActivity extends FragmentActivity {
         View color = findViewById(R.id.colorView);
         TextView title = findViewById(R.id.app_title);
         Button infoButton = findViewById(R.id.info_button);
+        Button crashButton = findViewById(R.id.crash_button);
 
         infoButton.setOnClickListener(view -> {
             Intent intent = new Intent(view.getContext(), InfoActivity.class);
             startActivity(intent);
+        });
+        crashButton.setOnClickListener(view -> {
+            throw new RuntimeException("This is a crash");
         });
 
         mPager = findViewById(R.id.pager);

@@ -6,3 +6,15 @@
 /build
 /captures
 .externalNativeBuild
+
+VariantConstants.java
+
+keystore.properties
+
+# Built application files
+*.apk
+
+# fastlane spesific
+fastlane/report.xml
+fastlane/.env.secret
+fastlane/keyfile.json
