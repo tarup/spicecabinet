@@ -31,6 +31,11 @@ Update metadata for a specific app
 fastlane android test
 ```
 
+### android version_bump
+```
+fastlane android version_bump
+```
+Bump up version number
 ### android build_all
 ```
 fastlane android build_all
@@ -40,17 +45,27 @@ Build all release versions
 ```
 fastlane android build
 ```
-Build a release version
+Build application
+### android clean
+```
+fastlane android clean
+```
+Clean outputs
 ### android hockeyapp_all
 ```
 fastlane android hockeyapp_all
 ```
-Build, then upload all applications to HockeyApp
+Upload all applications to HockeyApp
 ### android hockeyapp
 ```
 fastlane android hockeyapp
 ```
-Build, then upload application to HockeyApp
+Upload application to HockeyApp | Release
+### android hockeyapp_custom
+```
+fastlane android hockeyapp_custom
+```
+
 ### android playstore_all
 ```
 fastlane android playstore_all
@@ -60,12 +75,12 @@ Build all application releases & Deploy to Google Play
 ```
 fastlane android playstore
 ```
-Build application release & Deploy to Google Play
-### android playstore_beta
-```
-fastlane android playstore_beta
-```
 Build application release & Deploy Beta to Google Play
+### android validate
+```
+fastlane android validate
+```
+Validate changes with Google Play
 
 ----
 

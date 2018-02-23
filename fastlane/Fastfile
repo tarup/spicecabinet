@@ -11,11 +11,15 @@
 
 # This is the minimum version number required.
 # Update this, if you use features of a newer version
-min_fastlane_version("2.70.0")
-
 fastlane_require 'dotenv'
 
 default_platform(:android)
+
+@@applications = [
+  'redpepper',
+  'ginger',
+  'vanilla'
+]
 
 platform :android do
   before_all do
@@ -36,6 +40,13 @@ platform :android do
     puts "APPLICATION #{ENV['APP_NAME']}"
   end
 
+  desc "Bump up version number"
+  lane :version_bump do
+    commit_android_version_bump(
+      gradle_file_folder:"/Users/tpel/Projects/SpiceCabinet/spice-cabinet"
+    )
+  end
+
   # ----------------------------------------------------------
   # Build commands
 
@@ -43,15 +54,26 @@ platform :android do
   # Build a specific release version using: buid --env 'app name'
 
   desc "Build all release versions"
-  lane :build_all do
-    sh "fastlane build --env redpepper"
-    sh "fastlane build --env ginger"
-    sh "fastlane build --env vanilla"
+  lane :build_all do |options|
+    isRelease = options[:release] == true
+    @@applications.each do |app_name|
+       sh("fastlane build --env #{app_name} release:#{isRelease}")
+    end
   end
 
-  desc "Build a release version"
-  lane :build do
-    gradle(task: "#{ENV['TASK_RELEASE']}")
+  desc "Build application"
+  lane :build do |options|
+    scheme = (options[:release] ? "Release" : "Debug")
+    gradle(
+      task: "assemble",
+      flavor: "#{ENV['FLAVOR_NAME']}",
+      build_type: scheme
+    )
+  end
+
+  desc "Clean outputs"
+  lane :clean do
+    gradle(task: "clean")
   end
 
   # ----------------------------------------------------------
@@ -60,48 +82,42 @@ platform :android do
   # Build and upload all release versions to HockeyApp using: hockeyapp_all
   # Build and upload specific release version to HockeyApp using: hockeyapp --env 'app name'
 
-  desc "Build, then upload all applications to HockeyApp"
-  lane :hockeyapp_all do
-
-    lane_context[SharedValues::GRADLE_ALL_APK_OUTPUT_PATHS]
-
-    sh("fastlane hockeyapp --env redpepper")
-    sh("fastlane hockeyapp --env ginger")
-    sh("fastlane hockeyapp --env vanilla")
+  desc "Upload all applications to HockeyApp"
+  lane :hockeyapp_all do |options|
+    isRelease = options[:release] == true
+    @@applications.each do |app_name|
+       sh("fastlane hockeyapp --env #{app_name} release:#{isRelease}")
+    end
   end
 
   # Notify users, available for download
   # Lane is called using: hockeyapp --env 'app name' notify:1 status:2
-  desc "Build, then upload application to HockeyApp"
+  desc "Upload application to HockeyApp | Release"
   lane :hockeyapp do |options|
-    gradle(task: "clean")
-    gradle(task: "#{ENV['TASK_RELEASE']}")
     hockey(
-      apk: "#{ENV['PATH_APK_RELEASE']}",
+      apk: (options[:release] ? "#{ENV['PATH_APK_RELEASE']}"
+                              : "#{ENV['PATH_APK_DEBUG']}"),
       api_token: "#{ENV['API_TOKEN_HOCKEY']}",
-      dsym: "#{ENV['PATH_MAPPING']}",
-      notify: options[:notify],
-      status: options[:status],
+      dsym: (options[:release] ? "#{ENV['PATH_MAPPING']}"
+                              : "#{ENV['PATH_MAPPING']}"),
+      notify: (options[:release] ? "2" : "1"),
+      status: (options[:release] ? "1" : "2"),
       notes: File.read("changelog.txt")
     )
   end
 
-  # ----------------------------------------------------------
-
-#  desc "Submit a new Beta Build to Crashlytics Beta"
-#  lane :beta do
-#    gradle(task: "assembleRelease")
-#    crashlytics
-
-    # sh "your_script.sh"
-    # You can also use other beta testing services here
-#  end
-
-#  desc "Build release versions & Deploy to Google Play"
-#  lane :playstore do
-#    gradle(task: "assemble", build_type: "Release")
-#    upload_to_play_store
-#  end
+  lane :hockeyapp_custom do
+    isNotified = prompt(text: "#{ENV['PROMPT_NOTIFY']}", boolean: "true")
+    isDownloadable = prompt(text: "#{ENV['PROMPT_STATUS']}", boolean: "true")
+    hockey(
+      apk: "#{ENV['PATH_APK_RELEASE']}",
+      api_token: "#{ENV['API_TOKEN_HOCKEY']}",
+      dsym: "#{ENV['PATH_MAPPING']}",
+      notify: isNotified,
+      status: isDownloadable,
+      notes: File.read("changelog.txt")
+    )
+  end
 
   # ----------------------------------------------------------
   # Google Play commands
@@ -111,27 +127,13 @@ platform :android do
 
   desc "Build all application releases & Deploy to Google Play"
   lane :playstore_all do
-    sh("fastlane playstore --env redpepper")
-    sh("fastlane playstore --env ginger")
-    sh("fastlane playstore --env vanilla")
-  end
-
-  desc "Build application release & Deploy to Google Play"
-  lane :playstore do
-    gradle(task: "clean")
-    gradle(task: "#{ENV['TASK_RELEASE']}")
-    supply(
-      package_name: "#{ENV['PACKAGE']}",
-      metadata_path: "#{ENV['PATH_METADATA']}",
-      apk: "#{ENV['PATH_APK_RELEASE']}",
-      mapping: "#{ENV['PATH_MAPPING']}"
-    )
+    @@applications.each do |app_name|
+       sh("fastlane hockeyapp --env #{app_name}")
+    end
   end
 
   desc "Build application release & Deploy Beta to Google Play"
-  lane :playstore_beta do
-    gradle(task: "clean")
-    gradle(task: "#{ENV['TASK_RELEASE']}")
+  lane :playstore do
     supply(
       track: "beta",
       package_name: "#{ENV['PACKAGE']}",
@@ -141,15 +143,19 @@ platform :android do
     )
   end
 
-  # ----------------------------------------------------------
-
-#  desc "Deploy a new version to the Google Play"
-#  lane :deploy do
-#    gradle(task: "assembleRelease")
-#    upload_to_play_store
-#  end
-
-  # You can define as many lanes as you want
+  desc "Validate changes with Google Play"
+  lane :validate do
+    supply(
+      track: "beta",
+      package_name: "#{ENV['PACKAGE']}",
+      metadata_path: "#{ENV['PATH_METADATA']}",
+      apk: "#{ENV['PATH_APK_RELEASE']}",
+      mapping: "#{ENV['PATH_MAPPING']}",
+      skip_upload_screenshots: "true",
+      skip_upload_images: "true",
+      validate_only: "true"
+    )
+  end
 
   after_all do |lane|
     # This block is called, only if the executed lane was successful
@@ -166,9 +172,3 @@ platform :android do
     # )
   end
 end
-
-# More information about multiple platforms in fastlane: https://docs.fastlane.tools/advanced/#control-configuration-by-lane-and-by-platform
-# All available actions: https://docs.fastlane.tools/actions
-
-# fastlane reports which actions are used. No personal data is recorded.
-# Learn more at https://docs.fastlane.tools/#metrics

@@ -8,6 +8,7 @@
 .externalNativeBuild
 
 VariantConstants.java
+output.json
 
 keystore.properties
 
@@ -18,3 +19,4 @@ keystore.properties
 fastlane/report.xml
 fastlane/.env.secret
 fastlane/keyfile.json
+fastlane/metadata
