@@ -2,15 +2,6 @@
 # https://docs.fastlane.tools/actions/
 # All available actions: https://docs.fastlane.tools/actions
 # can also be listed using the `fastlane actions` command
-
-# Change the syntax highlighting to Ruby
-# All lines starting with a # are ignored when running `fastlane`
-
-# If you want to automatically update fastlane if a new version is available:
-# update_fastlane
-
-# This is the minimum version number required.
-# Update this, if you use features of a newer version
 fastlane_require 'dotenv'
 
 default_platform(:android)
@@ -26,44 +17,53 @@ platform :android do
     Dotenv.overload '.env.secret'
   end
 
-  desc "Initialize metadata for a specific app"
-  lane :init_metadata do
-    sh("fastlane supply init --metadata_path ./metadata/#{ENV['APP_NAME']} --package_name #{ENV['PACKAGE']}")
-  end
-
-  desc "Update metadata for a specific app"
-  lane :update_metadata do
-    sh("fastlane supply --metadata_path ./metadata/#{ENV['APP_NAME']} --package_name #{ENV['PACKAGE']}")
-  end
-
   lane :test do
     puts "APPLICATION #{ENV['APP_NAME']}"
   end
 
-  desc "Bump up version number"
-  lane :version_bump do
-    commit_android_version_bump(
-      gradle_file_folder:"/Users/tpel/Projects/SpiceCabinet/spice-cabinet"
-    )
+# ----------------------------------------------------------
+# Initializing
+
+# Initialize all metadata whenever needed using: init_metadata_all
+# NOTE Use by default since metadata is gitignored.
+
+# Initialize new application metadata with supply using:
+#   init_metadata --env 'app name'
+
+  desc "Initialize metadata for all"
+  lane :init_metadata_all do
+    @@applications.each do |app_name|
+      init_metadata(env: app_name)
+    end
   end
 
-  # ----------------------------------------------------------
-  # Build commands
+  desc "Initialize metadata for a specific app"
+  lane :init_metadata do |options|
+      Dotenv.overload ".env.#{options[:env]}"
 
-  # Build all release versions using: build_all
-  # Build a specific release version using: buid --env 'app name'
+      sh("fastlane supply init --metadata_path ./metadata/#{ENV['APP_NAME']} --package_name #{ENV['PACKAGE']}")
+  end
+
+# ----------------------------------------------------------
+# Build lanes
+
+# Build all applications using: build_all
+# Build a specific application using: buid --env 'app name'
+# Define release version with: release:true
 
   desc "Build all release versions"
   lane :build_all do |options|
     isRelease = options[:release] == true
     @@applications.each do |app_name|
-       sh("fastlane build --env #{app_name} release:#{isRelease}")
+      build(env: app_name, release: isRelease)
     end
   end
 
   desc "Build application"
   lane :build do |options|
+    Dotenv.overload ".env.#{options[:env]}"
     scheme = (options[:release] ? "Release" : "Debug")
+
     gradle(
       task: "assemble",
       flavor: "#{ENV['FLAVOR_NAME']}",
@@ -76,64 +76,55 @@ platform :android do
     gradle(task: "clean")
   end
 
-  # ----------------------------------------------------------
-  # HockeyApp commands
+# ----------------------------------------------------------
+# HockeyApp lanes
 
-  # Build and upload all release versions to HockeyApp using: hockeyapp_all
-  # Build and upload specific release version to HockeyApp using: hockeyapp --env 'app name'
+# Upload all applications to HockeyApp using: hockeyapp_all
+# Upload specific application to HockeyApp using: hockeyapp --env 'app name'
+# Define release version with: release:true
 
   desc "Upload all applications to HockeyApp"
   lane :hockeyapp_all do |options|
     isRelease = options[:release] == true
     @@applications.each do |app_name|
-       sh("fastlane hockeyapp --env #{app_name} release:#{isRelease}")
+       hockeyapp(env: app_name, release: isRelease)
     end
   end
 
-  # Notify users, available for download
-  # Lane is called using: hockeyapp --env 'app name' notify:1 status:2
-  desc "Upload application to HockeyApp | Release"
+# (notify: yes = 1, no = 2 | status: downloadable = 2, disabled = 1)
+  desc "Upload application to HockeyApp"
   lane :hockeyapp do |options|
+    Dotenv.overload ".env.#{options[:env]}"
+
     hockey(
       apk: (options[:release] ? "#{ENV['PATH_APK_RELEASE']}"
                               : "#{ENV['PATH_APK_DEBUG']}"),
       api_token: "#{ENV['API_TOKEN_HOCKEY']}",
-      dsym: (options[:release] ? "#{ENV['PATH_MAPPING']}"
-                              : "#{ENV['PATH_MAPPING']}"),
+      dsym: (options[:release] ? "#{ENV['PATH_MAPPING']}" : nil),
       notify: (options[:release] ? "2" : "1"),
       status: (options[:release] ? "1" : "2"),
       notes: File.read("changelog.txt")
     )
   end
 
-  lane :hockeyapp_custom do
-    isNotified = prompt(text: "#{ENV['PROMPT_NOTIFY']}", boolean: "true")
-    isDownloadable = prompt(text: "#{ENV['PROMPT_STATUS']}", boolean: "true")
-    hockey(
-      apk: "#{ENV['PATH_APK_RELEASE']}",
-      api_token: "#{ENV['API_TOKEN_HOCKEY']}",
-      dsym: "#{ENV['PATH_MAPPING']}",
-      notify: isNotified,
-      status: isDownloadable,
-      notes: File.read("changelog.txt")
-    )
-  end
+# ----------------------------------------------------------
+# Google Play lanes
 
-  # ----------------------------------------------------------
-  # Google Play commands
-
-  # Build and upload all release versions to PlayStore using: playstore_all
-  # Build and upload specific release version to PlayStore using: playstore --env 'app name'
+# Upload all release versions to PlayStore (Beta) using: playstore_all
+# Upload specific release version to PlayStore (Beta) using:
+#   playstore --env 'app name'
 
   desc "Build all application releases & Deploy to Google Play"
   lane :playstore_all do
     @@applications.each do |app_name|
-       sh("fastlane hockeyapp --env #{app_name}")
+       playstore(env: app_name)
     end
   end
 
   desc "Build application release & Deploy Beta to Google Play"
-  lane :playstore do
+  lane :playstore do |options|
+    Dotenv.overload ".env.#{options[:env]}"
+
     supply(
       track: "beta",
       package_name: "#{ENV['PACKAGE']}",
@@ -157,18 +148,24 @@ platform :android do
     )
   end
 
+# ----------------------------------------------------------
+# Combined deploy lanes
+
+  desc "Build & Deploy single release to HockeyApp & Google Play"
+  lane :deploy_release do
+    clean()
+    build(env: "#{ENV['APP_NAME']}", release:true)
+    hockeyapp(env: "#{ENV['APP_NAME']}", release:true)
+    playstore(env: "#{ENV['APP_NAME']}")
+  end
+
+# ----------------------------------------------------------
+
   after_all do |lane|
     # This block is called, only if the executed lane was successful
-
-    # slack(
-    #   message: "Successfully deployed new App Update."
-    # )
   end
 
   error do |lane, exception|
-    # slack(
-    #   message: exception.message,
-    #   success: false
-    # )
+    # This block is called when error occured.
   end
 end
