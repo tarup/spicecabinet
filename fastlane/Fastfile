@@ -14,18 +14,17 @@ default_platform(:android)
 
 platform :android do
   before_all do
-    Dotenv.overload '.env.secret'
+    Dotenv.load '.env.secret'
   end
 
   lane :test do
-    puts "APPLICATION #{ENV['APP_NAME']}"
+    puts "APPLICATION #{ENV['API_TOKEN_HOCKEY']}"
   end
 
 # ----------------------------------------------------------
 # Initializing
 
 # Initialize all metadata whenever needed using: init_metadata_all
-# NOTE Use by default since metadata is gitignored.
 
 # Initialize new application metadata with supply using:
 #   init_metadata --env 'app name'
@@ -151,7 +150,7 @@ platform :android do
 # ----------------------------------------------------------
 # Combined deploy lanes
 
-  desc "Build & Deploy single release to HockeyApp & Google Play"
+  desc "Build & Deploy single release to HockeyApp + Google Play"
   lane :deploy_release do
     clean()
     build(env: "#{ENV['APP_NAME']}", release:true)

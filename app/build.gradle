@@ -21,11 +21,10 @@ android {
         targetSdkVersion 26
         versionCode 6
         versionName "1.0.4"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         debug {
-            minifyEnabled false
+            versionNameSuffix "-Debug"
         }
         release {
             minifyEnabled true

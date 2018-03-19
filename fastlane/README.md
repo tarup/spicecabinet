@@ -16,26 +16,21 @@ or alternatively using `brew cask install fastlane`
 
 # Available Actions
 ## Android
-### android init_metadata
-```
-fastlane android init_metadata
-```
-Initialize metadata for a specific app
-### android update_metadata
-```
-fastlane android update_metadata
-```
-Update metadata for a specific app
 ### android test
 ```
 fastlane android test
 ```
 
-### android version_bump
+### android init_metadata_all
 ```
-fastlane android version_bump
+fastlane android init_metadata_all
 ```
-Bump up version number
+Initialize metadata for all
+### android init_metadata
+```
+fastlane android init_metadata
+```
+Initialize metadata for a specific app
 ### android build_all
 ```
 fastlane android build_all
@@ -60,12 +55,7 @@ Upload all applications to HockeyApp
 ```
 fastlane android hockeyapp
 ```
-Upload application to HockeyApp | Release
-### android hockeyapp_custom
-```
-fastlane android hockeyapp_custom
-```
-
+Upload application to HockeyApp
 ### android playstore_all
 ```
 fastlane android playstore_all
@@ -81,6 +71,11 @@ Build application release & Deploy Beta to Google Play
 fastlane android validate
 ```
 Validate changes with Google Play
+### android deploy_release
+```
+fastlane android deploy_release
+```
+Build & Deploy single release to HockeyApp & Google Play
 
 ----
 
